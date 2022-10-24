@@ -19,6 +19,18 @@ select last_name from sakila.actor_info
 where last_name != 'AKROYD'
 order by last_name asc;
 
+-- o
+
+select last_name, count(last_name)
+from sakila.actor
+group by last_name
+having count(*)=1;
+
+delete from sakila.actor
+where last_name=AKROYD;
+
+-- 2 
+
 SELECT last_name, COUNT(*)
 FROM sakila.actor_info
 GROUP BY last_name
@@ -31,41 +43,54 @@ GROUP BY last_name
 HAVING number_of_times_repeated > 1
 ORDER BY COUNT(last_name) DESC;
 
-select * from sakila.rental;
+-- 3
 
-select rental_id count(*)
-from rental_id where return_date > 0;
+select * from sakila.rental;
+select staff_id, count(*) as number_of_rentals
+from sakila.rental
+group by staff_id
+order by number_of_rentals desc;
 
 SELECT rental_id from sakila.rental
 where rental > 0;
 
+-- 4
+-- find out how many films were released each year
 
-select title, release_year from sakila.film
-group by release_year 
-order by release_year asc;
-
-select count(*)
+select release_year, count(*) as year_amount
 from sakila.film
-where release_year = 2006;
+group by release_year
+order by release_year desc;
 
-select rating, count(*) 
+-- 5 
+-- find out for each rating how many films were there.
+
+select rating, count(*) as year_amount
 from sakila.film
 group by rating
-order by rating asc;
+order by year_amount desc;
 
-select title, rating, count(*)
-from sakila.film
-group by rating;
-
-SELECT avg(length(title)) from sakila.film
-order by length;
+-- 6
+-- what is the mean length of the film for each rating type
 
 select title, duration, rating from sakila.film
 group by rating
 order by duration;
 
-SELECT AVG (length) FROM film;
+select rating, round(avg(length),2) as Avg_duration
+from sakila.film
+group by rating
+order by Avg_duration desc;
 
-select round(115.2720, 2) avg(length) from film;
+-- 7
+-- which kind of movies (rating) have a mean duration of more than two hours?
+
+select rating, length,
+round(avg(length),2) as average_length
+from sakila.film
+group by rating
+having average_length >120;
+
+
 
 
