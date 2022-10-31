@@ -1,0 +1,1 @@
+Create a table rentals_may to store the data from rental table with information for the month of May.
